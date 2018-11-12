@@ -50,7 +50,6 @@
 
     <scm>
         <developerConnection>scm:git:https://github.com/Rob7819/petclinic-sfg.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
 </project>
