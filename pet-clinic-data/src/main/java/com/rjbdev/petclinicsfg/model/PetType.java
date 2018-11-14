@@ -1,6 +1,6 @@
 package com.rjbdev.petclinicsfg.model;
 //RJB
-public class PetType {
+public class PetType extends BaseEntity {
 
     private String name;
 
