@@ -1,6 +1,6 @@
 package com.rjbdev.petclinicsfg.services;
 
-import java.security.acl.Owner;
+import com.rjbdev.petclinicsfg.model.Owner;
 
 public interface OwnerService extends CrudService<Owner, Long>{
 
