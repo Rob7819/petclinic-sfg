@@ -1,8 +1,10 @@
 package com.rjbdev.petclinicsfg.bootstrap;
 
 import com.rjbdev.petclinicsfg.model.Owner;
+import com.rjbdev.petclinicsfg.model.PetType;
 import com.rjbdev.petclinicsfg.model.Vet;
 import com.rjbdev.petclinicsfg.services.OwnerService;
+import com.rjbdev.petclinicsfg.services.PetTypeService;
 import com.rjbdev.petclinicsfg.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -12,15 +14,26 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
     //@Autowired is not needed in Spring 5.0+
-    public DataLoader(OwnerService ownerService, VetService vetService){
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
+
 
     @Override
     public void run(String... args) throws Exception {
+
+        PetType dog = new PetType();
+        dog.setName("Dog");
+        PetType savedDogPetType = petTypeService.save(dog);
+
+        PetType cat = new PetType();
+        dog.setName("Cat");
+        PetType savedCatPetType = petTypeService.save(cat);
 
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
