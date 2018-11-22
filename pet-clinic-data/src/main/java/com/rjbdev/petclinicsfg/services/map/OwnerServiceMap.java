@@ -32,7 +32,9 @@ public class OwnerServiceMap extends AbstractMapService <Owner, Long> implements
 
     @Override
     public Owner save(Owner object) {
-
+        //Using HashMaps and saving objects outside of JPA requires this step
+        //to ensure unsaved objects are properly handled (this is determined
+        //by the absence of IDs).
         if(object !=null){
             if(object.getPets() != null){
                 object.getPets().forEach(pet -> {
