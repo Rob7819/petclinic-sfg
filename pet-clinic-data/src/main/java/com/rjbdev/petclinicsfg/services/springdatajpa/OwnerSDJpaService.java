@@ -16,6 +16,7 @@ import java.util.Set;
 public class OwnerSDJpaService implements OwnerService {
     //Owner Spring Data JPA Service
 
+    //Three services autowired due to possibility of relationship management
     private final OwnerRepository ownerRepository;
     private final PetRepository petRepository;
     private final PetTypeRepository petTypeRepository;
