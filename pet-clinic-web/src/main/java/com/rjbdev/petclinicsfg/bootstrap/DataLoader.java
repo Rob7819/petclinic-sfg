@@ -38,6 +38,8 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void loadData() {
+        //Note: with project lombok we could use the builder to limit
+        //the amount of code we use, instead of Java objects
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogPetType = petTypeService.save(dog);
