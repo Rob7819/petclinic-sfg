@@ -38,7 +38,12 @@ public class PetController {
 
     @ModelAttribute("owner")
     public Owner findOwner(@PathVariable("ownerId") Long ownerId) {
-        return ownerService.findById(ownerId);
+        Owner foundOwner = ownerService.findById(ownerId);
+        System.out.println(foundOwner.getId() + " " + foundOwner.getFirstName() + " " + foundOwner.getLastName());
+        for (Pet item : foundOwner.getPets()) {
+            System.out.println("ID: " + item.getId() + "  Name: " + item.getName() + " Type: " + item.getPetType());
+        }
+        return foundOwner;
     }
 
     @InitBinder("owner")
@@ -61,6 +66,7 @@ public class PetController {
             result.rejectValue("name", "duplicate", "already exists");
         }
         owner.getPets().add(pet);
+        //pet.setOwner(owner);//This is needed for new pets to be listed but means our data model needs refining...
         if (result.hasErrors()) {
             model.addAttribute("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
