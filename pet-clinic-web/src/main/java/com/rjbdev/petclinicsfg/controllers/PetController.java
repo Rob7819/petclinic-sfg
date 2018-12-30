@@ -38,12 +38,7 @@ public class PetController {
 
     @ModelAttribute("owner")
     public Owner findOwner(@PathVariable("ownerId") Long ownerId) {
-        Owner foundOwner = ownerService.findById(ownerId);
-        System.out.println(foundOwner.getId() + " " + foundOwner.getFirstName() + " " + foundOwner.getLastName());
-        for (Pet item : foundOwner.getPets()) {
-            System.out.println("ID: " + item.getId() + "  Name: " + item.getName() + " Type: " + item.getPetType());
-        }
-        return foundOwner;
+        return ownerService.findById(ownerId);
     }
 
     @InitBinder("owner")
@@ -54,8 +49,9 @@ public class PetController {
     @GetMapping("/pets/new")
     public String initCreationForm(Owner owner, Model model) {
         Pet pet = new Pet();
-        owner.getPets().add(pet);
-        pet.setOwner(owner);
+        owner.addPet(pet);
+        //owner.getPets().add(pet);
+        //pet.setOwner(owner);
         model.addAttribute("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
@@ -65,8 +61,8 @@ public class PetController {
         if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null){
             result.rejectValue("name", "duplicate", "already exists");
         }
-        owner.getPets().add(pet);
-        //pet.setOwner(owner);//This is needed for new pets to be listed but means our data model needs refining...
+        owner.addPet(pet);
+        //owner.getPets().add(pet);//adding via getPets() does NOT satisfy the bidirectional relationship!
         if (result.hasErrors()) {
             model.addAttribute("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
@@ -91,7 +87,8 @@ public class PetController {
             model.addAttribute("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
-            owner.getPets().add(pet);
+            //owner.getPets().add(pet);
+            owner.addPet(pet);
             petService.save(pet);
             return "redirect:/owners/" + owner.getId();
         }
